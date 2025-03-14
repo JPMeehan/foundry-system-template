@@ -17,7 +17,7 @@
     "fvtt",
     "FoundryVTT"
   ],
-  "author": "",
+  "author": "Joseph Meehan",
   "private": true,
   "license": "MIT",
   "dependencies": {
