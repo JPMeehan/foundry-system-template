@@ -1,0 +1,67 @@
+{
+  "id": "system-template",
+  "title": "Foundry System Template",
+  "description": "",
+  "authors": [],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": ["biography.value", "biography.gm"]
+      },
+      "npc": {
+        "htmlFields": ["biography.value", "biography.gm"]
+      }
+    },
+    "Item": {
+      "equipment": {
+        "htmlFields": ["description.value", "description.gm"]
+      },
+      "feature": {
+        "htmlFields": ["description.value", "description.gm"]
+      }
+    }
+  },
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["index.css", "lang", "templates"]
+    }
+  },
+  "url": "TODO",
+  "license": "LICENSE.md",
+  "readme": "README.md",
+  "bugs": "TODO",
+  "changelog": "CHANGELOG.md",
+  "media": [{
+    "type": "setup",
+    "url": "systems/foundry-system-template/assets/anvil-impact.png",
+    "thumbnail": "systems/foundry-system-template/assets/anvil-impact.png"
+  }],
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "13.338",
+    "verified": "13.338"
+  },
+  "esmodules": ["index.mjs"],
+  "styles": ["index.css"],
+  "languages": [{
+    "lang": "en",
+    "name": "English",
+    "path": "lang/en.json"
+  }],
+  "packs": [],
+  "packFolders": [],
+  "socket": false,
+  "manifest": "TODO",
+  "download": "TODO",
+  "background": "systems/draw-steel/assets/anvil-impact.png",
+  "grid": {
+    "type": 1,
+    "distance": 1,
+    "units": "sq",
+    "diagonals": 0
+  },
+  "primaryTokenAttribute": "stamina",
+  "secondaryTokenAttribute": "hero.resources",
+  "initiative": "1d6"
+}
