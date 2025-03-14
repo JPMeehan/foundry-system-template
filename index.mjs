@@ -4,14 +4,32 @@ globalThis.foundrySystemTemplate = {CONFIG: SystemCONFIG, CONST: SystemCONST, ap
 
 Hooks.once("init", () => {
 
-  // TODO: Document Registration
+  // Register all Document classes
+  CONFIG.Actor.documentClass = documents.SystemActor;
+  CONFIG.Item.documentClass = documents.SystemItem;
 
-  // TODO: Data Model Registration
+  // Register system data models
+  Object.assign(CONFIG.Actor.dataModels, {
+    character: data.Actor.CharacterData,
+    npc: data.Actor.NpcData
+  });
+  Object.assign(CONFIG.Item.dataModels, {
+    equipment: data.Item.EquipmentData,
+    feature: data.Item.FeatureData
+  });
 
-  // TODO: Sheet Registration
+  // Register system sheets
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(Actor, SystemCONST.systemId, applications.sheets.SystemActorSheet, {
+    makeDefault: true
+  });
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(Item, SystemCONST.systemId, applications.sheets.SystemItemSheet, {
+    makeDefault: true
+  });
 
+  // Register system rolls
   CONFIG.Dice.rolls = [rolls.SystemRoll];
 
+  // Register system settings
   utils.SystemSettingsHandler.registerSettings();
 });
 

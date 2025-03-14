@@ -1,6 +1,6 @@
 import {systemID} from "../constants.mjs";
 
-/** @import {SettingConfig} from "../../../foundry/common/types.mjs" */
+/** @import {SettingConfig} from "../../foundry/common/types.mjs" */
 
 /**
  * A helper class that collects all of your settings and registers them
