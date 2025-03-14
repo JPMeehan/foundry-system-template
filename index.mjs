@@ -1,6 +1,6 @@
 import {applications, data, documents, rolls, utils, SystemCONFIG, SystemCONST} from "./module/_module.mjs";
 
-globalThis.foundrySystemTemplate = {CONFIG: SystemCONFIG, CONST: SystemCONST, applications, data, documents, rolls, utils}
+globalThis.foundrySystemTemplate = {CONFIG: SystemCONFIG, CONST: SystemCONST, applications, data, documents, rolls, utils};
 
 Hooks.once("init", () => {
 
@@ -12,8 +12,7 @@ Hooks.once("init", () => {
 
   CONFIG.Dice.rolls = [rolls.SystemRoll];
 
-
-  utils.SystemSettingsHandler.registerSettings()
+  utils.SystemSettingsHandler.registerSettings();
 });
 
 Hooks.once("i18nInit", () => {
@@ -34,7 +33,6 @@ Hooks.once("ready", () => {
 
   Hooks.callAll("system.ready");
 });
-
 
 /**
  * Render Hooks

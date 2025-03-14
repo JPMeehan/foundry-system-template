@@ -11,7 +11,7 @@ export default class SystemSettingsHandler {
    * @type {Record<string, SettingConfig>}
    */
   static get systemSettings() {
-    return {}
+    return {};
   }
 
   /**

@@ -8,4 +8,4 @@
  *  name: string;
  * }>}
  */
-export const conditions = {}
+export const conditions = {};
