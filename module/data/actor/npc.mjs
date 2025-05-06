@@ -1,1 +1,8 @@
-export default class NpcData extends foundry.abstract.TypeDataModel {}
+import BaseActorModel from "./base.mjs";
+
+export default class NpcData extends BaseActorModel {
+  /** @inheritdoc */
+  static defineSchema() {
+    return {};
+  }
+}
