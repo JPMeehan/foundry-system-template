@@ -20,8 +20,9 @@
   "author": "Joseph Meehan",
   "private": true,
   "license": "MIT",
-  "dependencies": {
-    "@foundryvtt/foundryvtt-cli": "^1.0.4",
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^4.4.0",
+    "@foundryvtt/foundryvtt-cli": "^1.1.0",
     "@html-eslint/eslint-plugin": "^0.35.2",
     "@html-eslint/parser": "^0.35.2",
     "eslint": "^9.22.0"
