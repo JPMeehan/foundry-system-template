@@ -1,1 +1,1 @@
-export {default as SystemSettingsHandler} from "./settings.mjs";
+export { default as SystemSettingsHandler } from "./settings.mjs";

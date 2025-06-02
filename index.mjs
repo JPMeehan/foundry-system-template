@@ -1,6 +1,6 @@
-import {applications, data, documents, rolls, utils, SystemCONFIG, SystemCONST} from "./module/_module.mjs";
+import { applications, data, documents, rolls, utils, SystemCONFIG, SystemCONST } from "./module/_module.mjs";
 
-globalThis.foundrySystemTemplate = {CONFIG: SystemCONFIG, CONST: SystemCONST, applications, data, documents, rolls, utils};
+globalThis.foundrySystemTemplate = { CONFIG: SystemCONFIG, CONST: SystemCONST, applications, data, documents, rolls, utils };
 
 Hooks.once("init", () => {
 
@@ -11,19 +11,19 @@ Hooks.once("init", () => {
   // Register system data models
   Object.assign(CONFIG.Actor.dataModels, {
     character: data.Actor.CharacterData,
-    npc: data.Actor.NpcData
+    npc: data.Actor.NpcData,
   });
   Object.assign(CONFIG.Item.dataModels, {
     equipment: data.Item.EquipmentData,
-    feature: data.Item.FeatureData
+    feature: data.Item.FeatureData,
   });
 
   // Register system sheets
   foundry.applications.apps.DocumentSheetConfig.registerSheet(Actor, SystemCONST.systemId, applications.sheets.SystemActorSheet, {
-    makeDefault: true
+    makeDefault: true,
   });
   foundry.applications.apps.DocumentSheetConfig.registerSheet(Item, SystemCONST.systemId, applications.sheets.SystemItemSheet, {
-    makeDefault: true
+    makeDefault: true,
   });
 
   // Register system rolls
@@ -42,7 +42,7 @@ Hooks.once("i18nInit", () => {
   CONFIG.statusEffects = CONFIG.statusEffects.filter(effect => !toRemove.includes(effect.id));
   // Status Effect Transfer
   for (const [id, value] of Object.entries(CONFIG.conditions)) {
-    CONFIG.statusEffects.push({id, ...value});
+    CONFIG.statusEffects.push({ id, ...value });
   }
 });
 

@@ -2,7 +2,7 @@ export default class SystemActor extends Actor {
   /** @inheritdoc */
   getRollData() {
     // Shallow copy
-    const rollData = {...this.system, flags: this.flags, name: this.name, statuses: {}};
+    const rollData = { ...this.system, flags: this.flags, name: this.name, statuses: {} };
 
     for (const status of this.statuses) {
       rollData.statuses[status] = 1;

@@ -1,4 +1,4 @@
-import {systemID} from "../constants.mjs";
+import { systemID } from "../constants.mjs";
 
 /** @import {SettingConfig} from "@client/_types.mjs" */
 

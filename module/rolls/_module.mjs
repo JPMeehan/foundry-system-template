@@ -1,1 +1,1 @@
-export {default as SystemRoll} from "./base.mjs";
+export { default as SystemRoll } from "./base.mjs";

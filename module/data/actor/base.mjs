@@ -7,13 +7,13 @@ export default class BaseActorModel extends foundry.abstract.TypeDataModel {
 
     return {
       hp: new fields.SchemaField({
-        value: new fields.NumberField({integer: true, min: 0}),
-        max: new fields.NumberField({integer: true, min: 0})
+        value: new fields.NumberField({ integer: true, min: 0 }),
+        max: new fields.NumberField({ integer: true, min: 0 }),
       }),
       biography: new fields.SchemaField({
         description: new fields.HTMLField(),
-        gm: new fields.HTMLField()
-      })
+        gm: new fields.HTMLField(),
+      }),
     };
   }
 
