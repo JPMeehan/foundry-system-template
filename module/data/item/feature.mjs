@@ -1,4 +1,4 @@
-import BaseItemModel from "./base.mjs";
+import BaseItemModel from "./base-item.mjs";
 
 export default class FeatureData extends BaseItemModel {
   /** @inheritdoc */

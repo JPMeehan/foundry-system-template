@@ -3,7 +3,7 @@ import CharacterModel from "./character.mjs";
 import NpcModel from "./npc.mjs";
 
 // Transform the default export into a normal export
-export { default as BaseActorModel } from "./base.mjs";
+export { default as BaseActorModel } from "./base-actor.mjs";
 export { CharacterModel, NpcModel };
 
 // This object gets used in the index.mjs file

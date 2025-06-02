@@ -1,8 +1,25 @@
 {
   "FoundrySystemTemplate": {
-    "Actor": {},
+    "Actor": {
+      "Base": {
+        "FIELDS": {}
+      },
+      "Character": {
+        "FIELDS": {}
+      },
+      "NPC": {
+        "FIELDS": {}
+      }
+    },
     "Item": {
+      "Base": {
+        "FIELDS": {}
+      },
+      "Feature": {
+        "FIELDS": {}
+      },
       "Equipment": {
+        "FIELDS": {},
         "Categories": {
           "weapon": "Weapon",
           "armor": "Armor"
@@ -11,7 +28,13 @@
     }
   },
   "TYPES": {
-    "Actor": {},
-    "Item": {}
+    "Actor": {
+      "character": "Character",
+      "npc": "NPC"
+    },
+    "Item": {
+      "equipment": "Equipment",
+      "feature": "Feature"
+    }
   }
 }

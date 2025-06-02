@@ -1,4 +1,4 @@
-import BaseItemModel from "./base.mjs";
+import BaseItemModel from "./base-item.mjs";
 import * as constants from "../../constants.mjs";
 
 export default class EquipmentData extends BaseItemModel {
