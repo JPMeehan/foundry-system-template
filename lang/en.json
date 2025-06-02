@@ -1,5 +1,15 @@
 {
-  "FoundrySystemTemplate": {},
+  "FoundrySystemTemplate": {
+    "Actor": {},
+    "Item": {
+      "Equipment": {
+        "Categories": {
+          "weapon": "Weapon",
+          "armor": "Armor"
+        }
+      }
+    }
+  },
   "TYPES": {
     "Actor": {},
     "Item": {}

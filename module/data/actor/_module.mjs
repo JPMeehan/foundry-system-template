@@ -1,2 +1,13 @@
-export { default as CharacterData } from "./character.mjs";
-export { default as NpcData } from "./npc.mjs";
+// We need to use CharacterModel & NpcModel in this file, so import at the top
+import CharacterModel from "./character.mjs";
+import NpcModel from "./npc.mjs";
+
+// Transform the default export into a normal export
+export { default as BaseActorModel } from "./base.mjs";
+export { CharacterModel, NpcModel };
+
+// This object gets used in the index.mjs file
+export const config = {
+  character: CharacterData,
+  npc: NpcModel,
+};

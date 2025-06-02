@@ -6,3 +6,12 @@ export const systemId = "foundry-system-template";
  * @returns {string} The path relative to the Foundry data folder
  */
 export const systemPath = (path) => `systems/${systemID}/${path}`;
+
+export const equipmentCategories = {
+  weapon: {
+    label: "FoundrySystemTemplate.Item.Equipment.Categories.weapon",
+  },
+  armor: {
+    label: "FoundrySystemTemplate.Item.Equipment.Categories.armor",
+  },
+};

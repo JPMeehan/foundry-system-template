@@ -9,10 +9,7 @@ Hooks.once("init", () => {
   CONFIG.Item.documentClass = documents.SystemItem;
 
   // Register system data models
-  Object.assign(CONFIG.Actor.dataModels, {
-    character: data.Actor.CharacterData,
-    npc: data.Actor.NpcData,
-  });
+  Object.assign(CONFIG.Actor.dataModels, data.Actor.config);
   Object.assign(CONFIG.Item.dataModels, {
     equipment: data.Item.EquipmentData,
     feature: data.Item.FeatureData,

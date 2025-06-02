@@ -1,19 +1,19 @@
-import {defineConfig, globalIgnores} from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import htmlEslint from "@html-eslint/eslint-plugin";
 import stylistic from "@stylistic/eslint-plugin";
 import globals from "globals";
 import parser from "@html-eslint/parser";
 import path from "node:path";
-import {fileURLToPath} from "node:url";
+import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import {FlatCompat} from "@eslint/eslintrc";
+import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
+  allConfig: js.configs.all,
 });
 
 export default defineConfig([
@@ -23,16 +23,16 @@ export default defineConfig([
 
     plugins: {
       "@html-eslint": htmlEslint,
-      "@stylistic": stylistic
+      "@stylistic": stylistic,
     },
 
     languageOptions: {
       globals: {
-        ...globals.browser
+        ...globals.browser,
       },
 
       ecmaVersion: "latest",
-      sourceType: "module"
+      sourceType: "module",
     },
 
     rules: {
@@ -40,7 +40,7 @@ export default defineConfig([
       "no-unused-vars": 0,
 
       "@stylistic/indent": ["error", 2, {
-        SwitchCase: 1
+        SwitchCase: 1,
       }],
 
       "@stylistic/quotes": ["error", "double"],
@@ -60,7 +60,7 @@ export default defineConfig([
 
       "@stylistic/no-multiple-empty-lines": ["error", {
         max: 1,
-        maxEOF: 0
+        maxEOF: 0,
       }],
 
       "@stylistic/object-curly-spacing": ["error", "always"],
@@ -84,25 +84,25 @@ export default defineConfig([
           "&&",
           "||",
           "in",
-          "instanceof"
-        ]]
-      }]
-    }
+          "instanceof",
+        ]],
+      }],
+    },
   }, {
     files: ["**/*.hbs", "**/*.html"],
     extends: compat.extends("plugin:@html-eslint/recommended"),
 
     languageOptions: {
-      parser: parser
+      parser: parser,
     },
 
     rules: {
       "@html-eslint/attrs-newline": ["off", {
         closeStyle: "sameline",
-        ifAttrsMoreThan: 9
+        ifAttrsMoreThan: 9,
       }],
 
-      "@html-eslint/indent": ["error", 2]
+      "@html-eslint/indent": ["error", 2],
     },
-  }
+  },
 ]);
