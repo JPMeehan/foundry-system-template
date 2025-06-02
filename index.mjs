@@ -10,16 +10,15 @@ Hooks.once("init", () => {
 
   // Register system data models
   Object.assign(CONFIG.Actor.dataModels, data.Actor.config);
-  Object.assign(CONFIG.Item.dataModels, {
-    equipment: data.Item.EquipmentData,
-    feature: data.Item.FeatureData,
-  });
+  Object.assign(CONFIG.Item.dataModels, data.Item.config);
 
   // Register system sheets
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(Actor, SystemCONST.systemId, applications.sheets.SystemActorSheet, {
+  const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
+
+  DocumentSheetConfig.registerSheet(foundry.documents.Actor, SystemCONST.systemId, applications.sheets.SystemActorSheet, {
     makeDefault: true,
   });
-  foundry.applications.apps.DocumentSheetConfig.registerSheet(Item, SystemCONST.systemId, applications.sheets.SystemItemSheet, {
+  DocumentSheetConfig.registerSheet(foundry.documents.Item, SystemCONST.systemId, applications.sheets.SystemItemSheet, {
     makeDefault: true,
   });
 
@@ -38,7 +37,7 @@ Hooks.once("i18nInit", () => {
   const toRemove = [];
   CONFIG.statusEffects = CONFIG.statusEffects.filter(effect => !toRemove.includes(effect.id));
   // Status Effect Transfer
-  for (const [id, value] of Object.entries(CONFIG.conditions)) {
+  for (const [id, value] of Object.entries(SystemCONFIG.conditions)) {
     CONFIG.statusEffects.push({ id, ...value });
   }
 });

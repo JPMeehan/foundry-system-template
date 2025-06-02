@@ -6,8 +6,8 @@ import NpcModel from "./npc.mjs";
 export { default as BaseActorModel } from "./base-actor.mjs";
 export { CharacterModel, NpcModel };
 
-// This object gets used in the index.mjs file
+// This object gets used in the index.mjs file to register the data models
 export const config = {
-  character: CharacterData,
+  character: CharacterModel,
   npc: NpcModel,
 };

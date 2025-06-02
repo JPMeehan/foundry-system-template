@@ -3,6 +3,9 @@
  */
 export default class BaseActorModel extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
+  static LOCALIZATION_PREFIXES = ["FoundrySystemTemplate.Actor.Base"];
+
+  /** @inheritdoc */
   static defineSchema() {
     // Schemas are made up of fields, which foundry provides in foundry.data.fields
     // This allows easier access to the fields within our schema definition

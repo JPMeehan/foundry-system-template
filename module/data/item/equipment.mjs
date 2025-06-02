@@ -1,10 +1,16 @@
 import BaseItemModel from "./base-item.mjs";
 import * as constants from "../../constants.mjs";
 
-export default class EquipmentData extends BaseItemModel {
+/**
+ * The system model for "equipment" type items
+ */
+export default class EquipmentModel extends BaseItemModel {
+  /** @inheritdoc */
+  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.Equipment")
+
   /** @inheritdoc */
   static defineSchema() {
-    // Calling super allows us to build on top of the schema definition in BaseActorModel
+    // Calling super allows us to build on top of the schema definition in BaseItemModel
     const schema = super.defineSchema();
 
     // Schemas are made up of fields, which foundry provides in foundry.data.fields

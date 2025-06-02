@@ -2,7 +2,25 @@
   "FoundrySystemTemplate": {
     "Actor": {
       "Base": {
-        "FIELDS": {}
+        "FIELDS": {
+          "biography": {
+            "description": {
+              "label": "Biography"
+            },
+            "gm": {
+              "label": "GM Notes"
+            }
+          },
+          "hp": {
+            "label": "Hit Points",
+            "value": {
+              "label": "HP Value"
+            },
+            "max": {
+              "label": "HP Max"
+            }
+          }
+        }
       },
       "Character": {
         "FIELDS": {}
@@ -13,7 +31,16 @@
     },
     "Item": {
       "Base": {
-        "FIELDS": {}
+        "FIELDS": {
+          "description": {
+            "description": {
+              "label": "Biography"
+            },
+            "gm": {
+              "label": "GM Notes"
+            }
+          }
+        }
       },
       "Feature": {
         "FIELDS": {}

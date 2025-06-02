@@ -1,6 +1,12 @@
 import BaseActorModel from "./base-actor.mjs";
 
+/**
+ * The system model for "character" type actors
+ */
 export default class CharacterModel extends BaseActorModel {
+  /** @inheritdoc */
+  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Actor.Character")
+
   /** @inheritdoc */
   static defineSchema() {
     // Calling super allows us to build on top of the schema definition in BaseActorModel

@@ -1,4 +1,4 @@
-import { systemID } from "../constants.mjs";
+import { systemId } from "../constants.mjs";
 
 /** @import {SettingConfig} from "@client/_types.mjs" */
 
@@ -20,7 +20,7 @@ export default class SystemSettingsHandler {
    */
   static registerSettings() {
     for (const [key, value] of Object.entries(this.systemSettings)) {
-      game.settings.register(systemID, key, value);
+      game.settings.register(systemId, key, value);
     }
   }
 }
