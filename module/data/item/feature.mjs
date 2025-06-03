@@ -5,7 +5,7 @@ import BaseItemModel from "./base-item.mjs";
  */
 export default class FeatureModel extends BaseItemModel {
   /** @inheritdoc */
-  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.Feature")
+  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.Feature");
 
   /** @inheritdoc */
   static defineSchema() {
@@ -17,7 +17,7 @@ export default class FeatureModel extends BaseItemModel {
     const fields = foundry.data.fields;
 
     // An example of a range slider
-    schema.level = new fields.NumberField({ min: 0, step: 1, max: 20, nullable: false })
+    schema.level = new fields.NumberField({ min: 0, step: 1, max: 20, nullable: false });
 
     return schema;
   }

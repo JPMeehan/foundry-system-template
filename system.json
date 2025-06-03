@@ -24,7 +24,7 @@
   "flags": {
     "hotReload": {
       "extensions": ["css", "html", "hbs", "json"],
-      "paths": ["index.css", "lang", "templates"]
+      "paths": ["styles", "lang", "templates"]
     }
   },
   "url": "TODO",
@@ -39,11 +39,13 @@
   }],
   "version": "0.1.0",
   "compatibility": {
-    "minimum": "13.338",
-    "verified": "13.338"
+    "minimum": "13.342",
+    "verified": "13"
   },
   "esmodules": ["index.mjs"],
-  "styles": ["index.css"],
+  "styles": [
+    { "src": "styles/system.css", "layer": "system" }
+  ],
   "languages": [{
     "lang": "en",
     "name": "English",

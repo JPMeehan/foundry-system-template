@@ -1,5 +1,15 @@
 {
   "FoundrySystemTemplate": {
+    "Sheets": {
+      "Tabs": {
+        "biography": "Biography",
+        "description": "Description",
+        "details": "Details",
+        "items": "Items",
+        "effects": "Effects",
+        "stats": "Stats"
+      }
+    },
     "Actor": {
       "Base": {
         "FIELDS": {
@@ -52,6 +62,13 @@
           "armor": "Armor"
         }
       }
+    },
+    "Effect": {
+      "Label": "Effect",
+      "Inactive": "Inactive",
+      "Passive": "Passive",
+      "Temporary": "Temporary",
+      "Toggle": "Toggle Effect"
     }
   },
   "TYPES": {

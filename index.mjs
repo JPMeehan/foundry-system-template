@@ -55,3 +55,5 @@ Hooks.once("ready", () => {
 /**
  * Other Hooks
  */
+
+Hooks.on("hotReload", utils.hotReload);

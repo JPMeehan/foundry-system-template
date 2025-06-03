@@ -5,7 +5,7 @@ export const systemId = "foundry-system-template";
  * @param {string} path - A path relative to the root of this repository
  * @returns {string} The path relative to the Foundry data folder
  */
-export const systemPath = (path) => `systems/${systemID}/${path}`;
+export const systemPath = (path) => `systems/${systemId}/${path}`;
 
 export const equipmentCategories = {
   weapon: {

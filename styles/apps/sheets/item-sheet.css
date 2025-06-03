@@ -1,0 +1,17 @@
+.foundry-system-template.item {
+  .window-content {
+    padding-top: 0;
+  }
+
+  header {
+    padding: 0.5rem 0;
+    img {
+      max-width: 100px;
+    }
+    input[name="name"] {
+      height: var(--font-h1-size);
+      line-height: var(--font-h1-size);
+      font-size: var(--font-h2-size);
+    }
+  }
+}
