@@ -17,7 +17,7 @@ export default class BaseActorModel extends foundry.abstract.TypeDataModel {
       biography: new fields.SchemaField({
         // HTMLField must be paired with registering as an htmlField in system.json
         // The field definition *here* only applies in the client, the system.json registration enables server-side cleaning
-        description: new fields.HTMLField(),
+        value: new fields.HTMLField(),
         // biography.gm here is going to be an example of using a "gmOnly" field, which is another thing that must be registered in system.json
         gm: new fields.HTMLField({ gmOnly: true }),
       }),

@@ -2,6 +2,10 @@ import { systemId, systemPath } from "../../constants.mjs";
 
 const { api, sheets } = foundry.applications;
 
+/**
+ * A general implementation of ItemSheetV2 for system usage
+ * @extends sheets.ItemSheetV2
+ */
 export default class SystemItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
@@ -11,6 +15,12 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
     },
     window: {
       resizable: true,
+    },
+    actions: {
+      viewDoc: this.#viewEffect,
+      createDoc: this.#createEffect,
+      deleteDoc: this.#deleteEffect,
+      toggleEffect: this.#toggleEffect,
     },
   };
 
@@ -46,7 +56,7 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
       template: "templates/generic/tab-navigation.hbs",
     },
     description: {
-      template: systemPath("templates/item/details.hbs"),
+      template: systemPath("templates/item/description.hbs"),
       scrollable: [""],
     },
     details: {
@@ -92,16 +102,21 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
 
   /** @inheritdoc */
   async _preparePartContext(partId, context, options) {
-    context = super._preparePartContext(partId, context, options);
+    context = await super._preparePartContext(partId, context, options);
 
     switch (partId) {
+      case "header": break;
+      case "tabs": break;
       case "description":
+        context.tab = context.tabs[partId];
         await this._prepareDescriptionTab(context, options);
         break;
       case "details":
+        context.tab = context.tabs[partId];
         await this._prepareDetailsTab(context, options);
         break;
       case "effects":
+        context.tab = context.tabs[partId];
         await this._prepareEffectsTab(context, options);
         break;
       default:
@@ -109,6 +124,7 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
         // This means that if the part is unrecognized (AKA added by a module)
         // That module can use `Hooks.on` to provide a callback here.
         // Unlike our functions however, they will be limited to sync-speed context prep only
+        context.tab = context.tabs[partId];
         Hooks.callAll(`${systemId}.prepareItemTab`, partId, context, options);
     }
 
@@ -122,7 +138,24 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
    * @param {object} context
    * @param {ApplicationRenderOptions} options
    */
-  async _prepareDescriptionTab(context, options) {}
+  async _prepareDescriptionTab(context, options) {
+
+    // Text Enrichment is a foundry-specific implementation of RegEx that transforms text like [[/r 1d20]] into a clickable link
+    // It's needed for the nice "display" version of the prosemirror editors
+    const TextEditor = foundry.applications.ux.TextEditor.implementation;
+
+    // One common pitfall with reusing enrichment options is that they are passed by reference to descendent functions
+    // This can cause problems with foundry's Embed Depth handling, so always destructure with { ...options } when passing to a new enrichHTML call
+    const enrichmentOptions = {
+      secrets: this.item.isOwner,
+      rollData: this.item.getRollData(),
+      relativeTo: this.item,
+    };
+
+    context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description.value, { ...enrichmentOptions });
+
+    context.enrichedGMNotes = await TextEditor.enrichHTML(this.item.system.description.gm, { ...enrichmentOptions });
+  }
 
   /* -------------------------------------------------- */
 
@@ -131,7 +164,9 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
    * @param {object} context
    * @param {ApplicationRenderOptions} options
    */
-  async _prepareDetailsTab(context, options) {}
+  async _prepareDetailsTab(context, options) {
+    // This is a good place to prepare the options for selects
+  }
 
   /* -------------------------------------------------- */
 
@@ -140,7 +175,38 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
    * @param {object} context
    * @param {ApplicationRenderOptions} options
    */
-  async _prepareEffectsTab(context, options) {}
+  async _prepareEffectsTab(context, options) {
+    const categories = {
+      temporary: {
+        type: "temporary",
+        label: game.i18n.localize("FoundrySystemTemplate.Effect.Temporary"),
+        effects: [],
+      },
+      passive: {
+        type: "passive",
+        label: game.i18n.localize("FoundrySystemTemplate.Effect.Passive"),
+        effects: [],
+      },
+      inactive: {
+        type: "inactive",
+        label: game.i18n.localize("FoundrySystemTemplate.Effect.Inactive"),
+        effects: [],
+      },
+    };
+
+    // Iterate over active effects, classifying them into categories
+    for (const e of this.item.effects) {
+      if (e.disabled) categories.inactive.effects.push(e);
+      else if (e.isTemporary) categories.temporary.effects.push(e);
+      else categories.passive.effects.push(e);
+    }
+
+    // Sort each category
+    for (const c of Object.values(categories)) {
+      c.effects.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    }
+    context.effects = categories;
+  }
 
   /* -------------------------------------------- */
   /*  Public API                                  */
@@ -150,12 +216,92 @@ export default class SystemItemSheet extends api.HandlebarsApplicationMixin(shee
   /*  Action Event Handlers                       */
   /* -------------------------------------------- */
 
+  /**
+   * Renders an embedded document's sheet
+   *
+   * @this SystemItemSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async #viewEffect(event, target) {
+    const effect = this._getEffect(target);
+    effect.sheet.render(true);
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Handles item deletion
+   *
+   * @this SystemItemSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async #deleteEffect(event, target) {
+    const effect = this._getEffect(target);
+    effect.delete();
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
+   *
+   * @this SystemItemSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async #createEffect(event, target) {
+    const aeCls = getDocumentClass("ActiveEffect");
+    const effectData = {
+      name: aeCls.defaultName({
+        type: target.dataset.type,
+        parent: this.item,
+      }),
+    };
+    for (const [dataKey, value] of Object.entries(target.dataset)) {
+      if (["action", "documentClass"].includes(dataKey)) continue;
+      foundry.utils.setProperty(effectData, dataKey, value);
+    }
+
+    aeCls.create(effectData, { parent: this.item });
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Determines effect parent to pass to helper
+   *
+   * @this SystemItemSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async #toggleEffect(event, target) {
+    const effect = this._getEffect(target);
+    effect.update({ disabled: !effect.disabled });
+  }
+
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
-  /* -------------------------------------------- */
-  /*  Compatibility and Deprecations              */
-  /* -------------------------------------------- */
+  /* -------------------------------------------------- */
+  /*   Helper functions                                 */
+  /* -------------------------------------------------- */
+
+  /**
+   * Fetches the row with the data for the rendered embedded document
+   *
+   * @param {HTMLElement} target  The element with the action
+   * @returns {HTMLLIElement} The document's row
+   */
+  _getEffect(target) {
+    const li = target.closest(".effect");
+    return this.item.effects.get(li?.dataset?.effectId);
+  }
 
 }

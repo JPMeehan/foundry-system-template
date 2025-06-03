@@ -14,7 +14,7 @@
       "Base": {
         "FIELDS": {
           "biography": {
-            "description": {
+            "value": {
               "label": "Biography"
             },
             "gm": {
