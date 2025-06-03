@@ -18,6 +18,9 @@
       font-size: var(--font-h2-size);
     }
   }
+  [data-application-part="stats"] {
+    padding-top: 0.5rem;
+  }
   [data-application-part="items"] {
     ul {
       list-style: none;

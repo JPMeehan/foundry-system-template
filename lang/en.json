@@ -49,18 +49,34 @@
             "gm": {
               "label": "GM Notes"
             }
+          },
+          "properties": {
+            "label": "Properties"
           }
         }
       },
       "Feature": {
-        "FIELDS": {}
+        "FIELDS": {
+          "level": {
+            "label": "Level"
+          }
+        }
       },
       "Equipment": {
-        "FIELDS": {},
+        "FIELDS": {
+          "category": {
+            "label": "Category"
+          }
+        },
         "Categories": {
           "weapon": "Weapon",
           "armor": "Armor"
         }
+      },
+      "Properties": {
+        "epic": "Epic",
+        "metal": "Metal",
+        "supernatural": "Supernatural"
       }
     },
     "Effect": {
