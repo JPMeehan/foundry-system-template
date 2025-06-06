@@ -8,7 +8,7 @@ const { api, sheets } = foundry.applications;
 export default class SystemItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
-    classes: ["item", "foundry-system-template"],
+    classes: ["item", systemId],
     form: {
       submitOnChange: true,
     },

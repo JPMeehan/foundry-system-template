@@ -10,7 +10,7 @@ const { api, sheets } = foundry.applications;
 export default class SystemActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
-    classes: ["actor", "foundry-system-template"],
+    classes: ["actor", systemId],
     form: {
       submitOnChange: true,
     },

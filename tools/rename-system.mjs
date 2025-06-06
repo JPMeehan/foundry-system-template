@@ -87,13 +87,17 @@ class SystemGenerator {
       await fs.copyFile(f, path.join(this.systemFolder, f));
     }
 
-    await this.updateManifest();
+    await this.updateSystemID();
+
+    await this.updateI18N();
+
+    await this.updateNamespace();
   }
 
   /**
-   * Updates system.json
+   * Updates system.json, package.json, and css files
    */
-  async updateManifest() {
+  async updateSystemID() {
     const manifestPath = path.join(this.systemFolder, "system.json");
 
     // Find and Replace
@@ -108,6 +112,61 @@ class SystemGenerator {
     });
 
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2));
+
+    for await (const file of fs.glob("styles/**/*.css", { cwd: this.systemFolder })) {
+      const filePath = path.join(this.systemFolder, file);
+      const data = await fs.readFile(filePath);
+      const contents = data.toString();
+      const newContents = contents.replaceAll(this.originals.systemId, this.systemId);
+      await fs.writeFile(filePath, newContents);
+    }
+
+    for (const file of ["package.json", "package-lock.json"]) {
+      const filePath = path.join(this.systemFolder, file);
+      const data = await fs.readFile(filePath);
+      const contents = data.toString();
+      const newContents = contents.replaceAll(this.originals.systemId, this.systemId);
+      await fs.writeFile(filePath, newContents);
+    }
+  }
+
+  /**
+   * Update all ESM & Template files to use the right i18n paths.
+   * Also updates the ESM files to use the right system ID
+   */
+  async updateI18N() {
+    for await (const file of fs.glob("module/**/*.mjs", { cwd: this.systemFolder })) {
+      const filePath = path.join(this.systemFolder, file);
+      const data = await fs.readFile(filePath);
+      const contents = data.toString();
+      const newContents = contents.replaceAll(this.originals.i18n, this.i18n).replaceAll(this.originals.systemId, this.systemId);
+      await fs.writeFile(filePath, newContents);
+    }
+
+    for await (const file of fs.glob("templates/**/*.hbs", { cwd: this.systemFolder })) {
+      const filePath = path.join(this.systemFolder, file);
+      const data = await fs.readFile(filePath);
+      const contents = data.toString();
+      const newContents = contents.replaceAll(this.originals.i18n, this.i18n);
+      await fs.writeFile(filePath, newContents);
+    }
+
+    const langFile = path.join(this.systemFolder, "lang", "en.json");
+    const data = await fs.readFile(langFile);
+    const contents = data.toString();
+    const newContents = contents.replaceAll(this.originals.i18n, this.i18n);
+    await fs.writeFile(langFile, newContents);
+  }
+
+  /**
+   * Update the index file to use the correct global namespace
+   */
+  async updateNamespace() {
+    const indexFile = path.join(this.systemFolder, "index.mjs");
+    const data = await fs.readFile(indexFile);
+    const contents = data.toString();
+    const newContents = contents.replaceAll(this.originals.systemNamespace, this.systemNamespace);
+    await fs.writeFile(indexFile, newContents);
   }
 }
 
