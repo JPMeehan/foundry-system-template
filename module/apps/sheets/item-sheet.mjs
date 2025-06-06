@@ -4,7 +4,6 @@ const { api, sheets } = foundry.applications;
 
 /**
  * A general implementation of ItemSheetV2 for system usage
- * @extends sheets.ItemSheetV2
  */
 export default class SystemItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   /** @inheritdoc */

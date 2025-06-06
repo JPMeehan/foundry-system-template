@@ -1,17 +1,68 @@
 import * as readline from "readline/promises";
+import * as fs from "fs/promises";
+import path from "path";
 
-/**
- * TODO: Renames various files after asking system name.
- * - kebab-case: System ID, file names
- * - camelCase: Global namespace. Offer
- * - CAPS_SNAKE: CONFIG & CONST
- *
- * Also need to adjust author info
- */
+class SystemGenerator {
+  /**
+   *
+   * @param {string} title
+   * @param {string} systemId
+   * @param {string} namespace
+   * @param {string} i18n
+   */
+  constructor(title, systemId, namespace, i18n) {
+    /**
+     * The system's title
+     * @type {string}
+     */
+    this.title = title;
+
+    /**
+     * The system's ID
+     * @type {string}
+     */
+    this.systemId = systemId;
+
+    /**
+     * The system's namespace
+     * @type {string}
+     */
+    this.systemNamespace = namespace;
+
+    /**
+     * The system's i18n path
+     * @type {string}
+     */
+    this.i18n = i18n;
+  }
+
+  /**
+   * The original strings to replace
+   * @type {Record<string, string>}
+   */
+  get originals() {
+    return {
+      title: "Foundry System Template",
+      kebabCase: "foundry-system-template",
+      camelCase: "foundrySystemTemplate",
+      i18n: "FoundrySystemTemplate",
+    };
+  }
+
+  async build() {
+    const systemFolder = path.join("..", this.systemId);
+    for await (const file of fs.glob("**/*", { exclude: (entry) => {
+      return (entry.startsWith("foundry") || entry.startsWith("node_modules") || (entry === path.join("tools", "rename-system.mjs")));
+    } })) {
+      const newPath = path.join(systemFolder, file);
+      await fs.copyFile(file, newPath);
+    }
+  }
+}
 
 let title = "Foundry System Template";
-let kebabCase = "foundry-system-template";
-let camelCase = "foundrySystemTemplate";
+let systemId = "foundry-system-template";
+let systemNamespace = "foundrySystemTemplate";
 let i18n = "FoundrySystemTemplate";
 
 /**
@@ -54,20 +105,20 @@ title = await rl.question("System Title?\n");
 
 const allowedId = /^[A-Za-z0-9-_]+$/;
 let validID = false;
-let message = `System ID? Package IDs may only be alphanumeric with hyphens or underscores.\nDefault: ${titleToKebab(title)}\n`;
+let message = `System ID? Package IDs may only be alphanumeric with hyphens or underscores. This will also be the name of the folder for your system.\nDefault: ${titleToKebab(title)}\n`;
 while (!validID) {
-  kebabCase = await rl.question(message);
-  kebabCase ||= titleToKebab(title);
-  validID = allowedId.test(kebabCase);
+  systemId = await rl.question(message);
+  systemId ||= titleToKebab(title);
+  validID = allowedId.test(systemId);
 }
 
 const allowedNamespace = /^[A-Za-z0-9_]+$/;
 let validNamespace = false;
 message = `Global Namespace? Convention is to use camelCase.\nDefault: ${titleToCamel(title)}\n`;
 while (!validNamespace) {
-  camelCase = await rl.question(message);
-  camelCase ||= titleToCamel(title);
-  validNamespace = allowedNamespace.test(camelCase);
+  systemNamespace = await rl.question(message);
+  systemNamespace ||= titleToCamel(title);
+  validNamespace = allowedNamespace.test(systemNamespace);
 }
 
 let validI18N = false;
@@ -80,4 +131,6 @@ while (!validI18N) {
 
 rl.close();
 
-console.log(title, kebabCase, camelCase, i18n);
+const generator = new SystemGenerator(title, systemId, systemNamespace, i18n);
+
+generator.build();

@@ -6,7 +6,6 @@ const { api, sheets } = foundry.applications;
 
 /**
  * A general implementation of ActorSheetV2 for system usage
- * @extends sheets.ActorSheetV2
  */
 export default class SystemActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   /** @inheritdoc */
