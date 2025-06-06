@@ -30,6 +30,11 @@ export default class BaseActorModel extends foundry.abstract.TypeDataModel {
     };
   }
 
+  /** @inheritdoc */
+  prepareDerivedData() {
+    this.hp.bloodied = Math.floor(this.hp.max / 2);
+  }
+
   /**
    * Perform item subtype specific modifications to the actor roll data
    * @param {object} rollData   Pointer to the roll data object

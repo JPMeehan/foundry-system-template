@@ -4,6 +4,7 @@
   "description": "A template repository for FoundryVTT system development.",
   "main": "index.mjs",
   "scripts": {
+    "generate": "node ./tools/rename-system.mjs",
     "createSymlinks": "node ./tools/create-symlinks.mjs",
     "pullJSONtoLDB": "node ./tools/pullJSONtoLDB.mjs",
     "pushLDBtoJSON": "node ./tools/pushLDBtoJSON.mjs",
