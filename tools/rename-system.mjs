@@ -49,13 +49,40 @@ class SystemGenerator {
     };
   }
 
+  /**
+   * The list of directories to copy
+   * @type {string[]}
+   */
+  get targetDirs() {
+    return [".vscode/", "assets/", "lang/", "module/", "styles/", "templates/", "tools/"];
+  }
+
+  get targetFiles() {
+    return [
+      ".editorconfig",
+      ".gitattributes",
+      ".gitignore",
+      "CHANGELOG.md",
+      "eslint.config.mjs",
+      "example-foundry-config.yaml",
+      "index.mjs",
+      "jsconfig.json",
+      "package-lock.json",
+      "package.json",
+      "README.md",
+      "system.json",
+    ];
+  }
+
   async build() {
     const systemFolder = path.join("..", this.systemId);
-    for await (const file of fs.glob("**/*", { exclude: (entry) => {
-      return (entry.startsWith("foundry") || entry.startsWith("node_modules") || (entry === path.join("tools", "rename-system.mjs")));
-    } })) {
-      const newPath = path.join(systemFolder, file);
-      await fs.copyFile(file, newPath);
+    for (const folder of this.targetDirs) {
+      await fs.cp(folder, path.join(systemFolder, folder), {
+        recursive: true,
+      });
+    }
+    for (const f of this.targetFiles) {
+      await fs.copyFile(f, path.join(systemFolder, f));
     }
   }
 }
