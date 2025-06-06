@@ -60,7 +60,7 @@
   "socket": false,
   "manifest": "TODO",
   "download": "TODO",
-  "background": "systems/draw-steel/assets/anvil-impact.png",
+  "background": "systems/foundry-system-template/assets/anvil-impact.png",
   "grid": {
     "type": 1,
     "distance": 1,

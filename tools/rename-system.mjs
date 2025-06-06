@@ -38,13 +38,12 @@ class SystemGenerator {
 
   /**
    * The original strings to replace
-   * @type {Record<string, string>}
    */
   get originals() {
     return {
       title: "Foundry System Template",
-      kebabCase: "foundry-system-template",
-      camelCase: "foundrySystemTemplate",
+      systemId: "foundry-system-template",
+      systemNamespace: "foundrySystemTemplate",
       i18n: "FoundrySystemTemplate",
     };
   }
@@ -74,16 +73,41 @@ class SystemGenerator {
     ];
   }
 
+  get systemFolder() {
+    return path.join("..", this.systemId);
+  }
+
   async build() {
-    const systemFolder = path.join("..", this.systemId);
     for (const folder of this.targetDirs) {
-      await fs.cp(folder, path.join(systemFolder, folder), {
+      await fs.cp(folder, path.join(this.systemFolder, folder), {
         recursive: true,
       });
     }
     for (const f of this.targetFiles) {
-      await fs.copyFile(f, path.join(systemFolder, f));
+      await fs.copyFile(f, path.join(this.systemFolder, f));
     }
+
+    await this.updateManifest();
+  }
+
+  /**
+   * Updates system.json
+   */
+  async updateManifest() {
+    const manifestPath = path.join(this.systemFolder, "system.json");
+
+    // Find and Replace
+    const manifest = JSON.parse(await fs.readFile(manifestPath));
+
+    manifest.id = this.systemId;
+    manifest.title = this.title;
+    manifest.background = manifest.background.replace(this.originals.systemId, this.systemId);
+    Object.assign(manifest.media[0], {
+      url: manifest.media[0].url.replace(this.originals.systemId, this.systemId),
+      thumbnail: manifest.media[0].thumbnail.replace(this.originals.systemId, this.systemId),
+    });
+
+    await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2));
   }
 }
 
@@ -137,15 +161,17 @@ while (!validID) {
   systemId = await rl.question(message);
   systemId ||= titleToKebab(title);
   validID = allowedId.test(systemId);
+  if (!validID) console.error("Invalid System ID");
 }
 
 const allowedNamespace = /^[A-Za-z0-9_]+$/;
 let validNamespace = false;
-message = `Global Namespace? Convention is to use camelCase.\nDefault: ${titleToCamel(title)}\n`;
+message = `Global System Namespace? Convention is to use camelCase.\nDefault: ${titleToCamel(title)}\n`;
 while (!validNamespace) {
   systemNamespace = await rl.question(message);
   systemNamespace ||= titleToCamel(title);
   validNamespace = allowedNamespace.test(systemNamespace);
+  if (!validNamespace) console.error("Invalid System Namespace!");
 }
 
 let validI18N = false;
@@ -154,6 +180,7 @@ while (!validI18N) {
   i18n = await rl.question(message);
   i18n ||= titleToSnakeCaps(title);
   validI18N = allowedNamespace.test(i18n);
+  if (!validI18N) console.error("Invalid I18N Namespace");
 }
 
 rl.close();
