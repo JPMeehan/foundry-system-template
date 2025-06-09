@@ -94,6 +94,43 @@ export default class SystemActorSheet extends api.HandlebarsApplicationMixin(she
   /* -------------------------------------------- */
 
   /** @inheritdoc */
+  _configureRenderParts(options) {
+    const parts = super._configureRenderParts(options);
+
+    if (this.document.limited) {
+      this._restrictLimited(parts);
+      this.tabGroups.primary = "biography";
+    }
+
+    return parts;
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  _prepareTabs(group) {
+    const tabs = super._prepareTabs(group);
+
+    if (this.document.limited && (group === "primary")) this._restrictLimited(tabs);
+
+    return tabs;
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Helper function to mutate the parts or tab object to remove sections that aren't visible to Limited-only users.
+   * @param {Record<string, any>} record The parts or tabs object
+   */
+  _restrictLimited(record) {
+    delete record.stats;
+    delete record.items;
+    delete record.effects;
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
