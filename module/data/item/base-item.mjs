@@ -3,7 +3,7 @@
  */
 export default class BaseItemModel extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
-  static LOCALIZATION_PREFIXES = ["FoundrySystemTemplate.Item.Base"];
+  static LOCALIZATION_PREFIXES = ["FoundrySystemTemplate.Item.base"];
 
   /** @inheritdoc */
   static defineSchema() {

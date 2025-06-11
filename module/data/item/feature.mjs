@@ -5,7 +5,7 @@ import BaseItemModel from "./base-item.mjs";
  */
 export default class FeatureModel extends BaseItemModel {
   /** @inheritdoc */
-  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.Feature");
+  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.feature");
 
   /** @inheritdoc */
   static defineSchema() {

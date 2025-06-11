@@ -9,9 +9,9 @@ export const systemPath = (path) => `systems/${systemId}/${path}`;
 
 export const equipmentCategories = {
   weapon: {
-    label: "FoundrySystemTemplate.Item.Equipment.Categories.weapon",
+    label: "FoundrySystemTemplate.Item.equipment.Categories.weapon",
   },
   armor: {
-    label: "FoundrySystemTemplate.Item.Equipment.Categories.armor",
+    label: "FoundrySystemTemplate.Item.equipment.Categories.armor",
   },
 };

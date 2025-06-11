@@ -11,7 +11,7 @@
       }
     },
     "Actor": {
-      "Base": {
+      "base": {
         "FIELDS": {
           "biography": {
             "value": {
@@ -32,15 +32,15 @@
           }
         }
       },
-      "Character": {
+      "character": {
         "FIELDS": {}
       },
-      "NPC": {
+      "npc": {
         "FIELDS": {}
       }
     },
     "Item": {
-      "Base": {
+      "base": {
         "FIELDS": {
           "description": {
             "description": {
@@ -55,14 +55,14 @@
           }
         }
       },
-      "Feature": {
+      "feature": {
         "FIELDS": {
           "level": {
             "label": "Level"
           }
         }
       },
-      "Equipment": {
+      "equipment": {
         "FIELDS": {
           "category": {
             "label": "Category"

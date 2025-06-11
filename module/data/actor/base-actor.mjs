@@ -3,7 +3,7 @@
  */
 export default class BaseActorModel extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
-  static LOCALIZATION_PREFIXES = ["FoundrySystemTemplate.Actor.Base"];
+  static LOCALIZATION_PREFIXES = ["FoundrySystemTemplate.Actor.base"];
 
   /** @inheritdoc */
   static defineSchema() {

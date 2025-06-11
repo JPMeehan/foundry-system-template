@@ -5,7 +5,7 @@ import BaseActorModel from "./base-actor.mjs";
  */
 export default class NpcModel extends BaseActorModel {
   /** @inheritdoc */
-  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Actor.NPC");
+  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Actor.npc");
 
   /** @inheritdoc */
   static defineSchema() {

@@ -6,7 +6,7 @@ import * as constants from "../../constants.mjs";
  */
 export default class EquipmentModel extends BaseItemModel {
   /** @inheritdoc */
-  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.Equipment");
+  static LOCALIZATION_PREFIXES = super.LOCALIZATION_PREFIXES.concat("FoundrySystemTemplate.Item.equipment");
 
   /** @inheritdoc */
   static defineSchema() {
